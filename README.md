@@ -1,8 +1,8 @@
 # IFTTT_ESP8266
-IFTTT_ESP8266 is a simple server+client project I've made to make my ESP8266 projects available and controllable by IFTTT. There are a lot of solutions in internet to make your projects reacheable from outside your LAN but all involve port forwarding (with the risks connected if you are not an experienced user and the possibility that your router doesn't permit it) and dynamicDNS services. This project overcomes these problems with a simple python server as intermediate.
+IFTTT_ESP8266 is a simple server+client project I've made to make my ESP8266 projects available and controllable by IFTTT. There are a lot of solutions in internet to make your projects reacheable from outside your LAN but all involve port forwarding (with the risks connected if you are not an experienced user and the possibility that your router doesn't permit it) and dynamicDNS services. This project overcomes these problems with a simple python server as intermediary.
 
 ## How it works
-Here there is an example of interaction with Google Assistant and IFTTT:
+Here there is an example of interaction with Google Assistant:
 
 ![Schema](/images/IFTTT_interaction.svg)
 
