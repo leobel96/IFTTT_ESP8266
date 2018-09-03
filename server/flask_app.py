@@ -5,9 +5,12 @@ import string
 
 from flask import Flask, render_template, request, session
 from flask_bcrypt import Bcrypt
+from flask_socketio import SocketIO
 
-app=Flask(__name__)
+app = Flask(__name__)
 bcrypt = Bcrypt(app)
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app, async_mode='eventlet')
 
 username = None
 password = None
@@ -79,8 +82,10 @@ def ifttt():
         device = request.get_json()["device"]
         IR[device] = request.get_json()["action"]
         return "OK"
-      else:
-        return "No IR"
+      elif deviceType == "light":
+        device = request.get_json()["device"]
+        IR[device] = request.get_json()["action"]
+        return "OK"
     else:
       return "BAD"
 
@@ -99,10 +104,17 @@ def device():
         device = request.get_json()["device"]
         pending = IR.pop(device,"None")
         return pending
-      else:
-        return "No IR"
+      elif deviceType == "light":
+        device = request.get_json()["device"]
+        pending = IR.pop(device,"None")
+        return pending
     else:
       return "BAD"
+   
+@socketio.on('connect', namespace='/test')
+def test_connect():
+  print('my response')
+  return 'ok'
 
 def random_string():
   secret_string = ''.join(random.SystemRandom().choice(string.ascii_uppercase\
@@ -111,4 +123,4 @@ def random_string():
 
 
 if __name__ == "__main__":
-  app.run(debug = True, host='0.0.0.0', port= 8090)
+  socketio.run(app, host='0.0.0.0', debug = False, use_reloader=False)
